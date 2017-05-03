@@ -40,8 +40,26 @@ ggplot(odh,
          subtitle = "Data openness and happiness by country in 2015") +
     theme_hc()
 
+odh %>% filter(!is.na(X2015.Score) & !is.na(Happiness.Score)) %>%
+  dplyr::summarise(cor(X2015.Score,Happiness.Score))
+##   cor(X2015.Score, Happiness.Score)
+## 1                         0.4910137
+
 # For just G8 countries.
 g8 <- c("Canada","France","Germany","Italy","Japan","United Kingdom","United States","Russia")
+ggplot(odh,
+    aes(x = X2015.Score, 
+        y = Happiness.Score)) + 
+    geom_point() +
+    geom_point(data=odh[g8,],color="red",size=5) +
+    geom_smooth(method="lm") +
+    labs(x = "Openness Score",
+         y = "Happiness Score",
+         title = "G8 in Red: Are open data friendly countries happy countries?",
+         subtitle = "Data openness and happiness by country in 2015") +
+    theme_hc()
+
+# For just G8 countries.
 odh %>%
   filter(Country=="Canada"|Country=="France"|Country=="Germany"|Country=="Italy"|Country=="Japan"|Country=="United Kingdom"|Country=="United States"|Country=="Russia") %>%
   ggplot(aes(x = X2015.Score, y = Happiness.Score, label=g8)) + 
@@ -50,6 +68,13 @@ odh %>%
     geom_smooth(method="lm") +
     labs(x = "Openness Score",
          y = "Happiness Score",
-         title = "Are open data friendly countries happy countries?",
+         title = "G8: Are open data friendly countries happy countries?",
          subtitle = "Data openness and happiness by country in 2015") +
     theme_hc()
+
+odh %>%
+  filter(Country=="Canada"|Country=="France"|Country=="Germany"|Country=="Italy"|Country=="Japan"|Country=="United Kingdom"|Country=="United States"|Country=="Russia") %>%
+  dplyr::summarise(cor(X2015.Score,Happiness.Score))
+##   cor(X2015.Score, Happiness.Score)
+## 1                         0.6234862
+
