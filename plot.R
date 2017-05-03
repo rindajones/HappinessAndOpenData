@@ -53,4 +53,3 @@ odh %>%
          title = "Are open data friendly countries happy countries?",
          subtitle = "Data openness and happiness by country in 2015") +
     theme_hc()
-
